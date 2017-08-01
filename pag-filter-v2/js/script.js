@@ -84,7 +84,7 @@ function searchList() {
     if (matched.length > 10) {
         appendPageLinks(matched);
     };
-
+    
    // Call showPage to show first ten students of matched list
    $('.pagination ul li').click(function() {
         // Use the showPage function to display the page for the link clicked
@@ -95,7 +95,6 @@ function searchList() {
     });   
 }
 
-//var list = $('.student-item');
 showPage(1, $('.student-item'));
 appendPageLinks($('.student-item'));
 $('button').click(function() {
