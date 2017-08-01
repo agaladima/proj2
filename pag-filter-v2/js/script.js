@@ -65,14 +65,21 @@ function searchList() {
         var name = $(this).children('div').find('h3').text();
         // ...and the student’s email…
         var email = $(this).children('div').find('span').text();
-        //console.log(name + ' ' + email);
 
+        //hide all items
+        $(this).hide();
         // ...if the search value is found inside either email or name…
         if (name.includes(result) || email.includes(result)) {
             // ...add this student to list of “matched” student
             matched.push($(this));
             console.log(matched);
-        }        
+
+            //show the items that match results
+            $(this).show();
+        } else {
+            // remove items that aren't matched
+            $(this).remove();
+        }
     });
 
     // If there’s no “matched” students…
@@ -82,17 +89,12 @@ function searchList() {
         }      
     // If over ten students were found…
     if (matched.length > 10) {
-        appendPageLinks(matched);
+        appendPageLinks($('.student-item'));
+        //call showPage function on the existing list of matched results
+        showPage(Math.ceil(matched.length/10), $('.student-item'));
+        //default to the first page
+        showPage(1, $('.student-item'));
     };
-    
-   // Call showPage to show first ten students of matched list
-   $('.pagination ul li').click(function() {
-        // Use the showPage function to display the page for the link clicked
-         showPage($(this), matched);
-          // mark that link as “active”
-        $('.pagination ul li').removeClass('active');
-        $(this).addClass('active');
-    });   
 }
 
 showPage(1, $('.student-item'));
