@@ -1,7 +1,7 @@
 //showpage function that displays a list of ten students based on "page number" user has selected//
 function showPage(page, list) {
     // hide all students on the page
-    $(list).hide();
+    list.hide();
 
     //beginning and ending position of page
     var start = (page*10)-10;
@@ -20,8 +20,8 @@ function showPage(page, list) {
 function appendPageLinks(list) {
     // determine how many pages for this student list 
     var pages = Math.ceil(list.length/10);
-    // create a page link section
-    var link = '';
+    // create a page link section unobtrusively
+    var link = '<div class="pagination"><ul>';
     var pageArr = [];
     // “for” every page
     for (var i = 1; i <= pages; i++) {
@@ -29,11 +29,12 @@ function appendPageLinks(list) {
         link += '<li><a href="#">' + i + '</a></li>';
         pageArr.push(i);
     };
-        
+    link+='</ul></div>';
+
     // remove the old page link section from the site
-    $('.pagination ul li').remove();
+    //$('.pagination ul li').remove();
     // append our new page link section to the site
-    $('.pagination ul').append(link);
+    $('.page').append(link);
     // define what happens when you click a link
     $('.pagination ul li').click(function() {
         // Use the showPage function to display the page for the link clicked
@@ -43,6 +44,11 @@ function appendPageLinks(list) {
         $(this).addClass('active');
     });     
 }
+
+//add search unobtrusively
+var link = '<div class="student-search"><input placeholder="Search for students...">';
+link+= '<button id="button">Search</button></div>';
+$('.page-header').append(link);
 
 function searchList() {
     // Obtain the value of the search input
@@ -82,7 +88,7 @@ function searchList() {
    // Call showPage to show first ten students of matched list
    $('.pagination ul li').click(function() {
         // Use the showPage function to display the page for the link clicked
-         showPage($(this).text(), matched);
+         showPage($(this), matched);
           // mark that link as “active”
         $('.pagination ul li').removeClass('active');
         $(this).addClass('active');
